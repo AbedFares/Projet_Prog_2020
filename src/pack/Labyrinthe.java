@@ -1,14 +1,14 @@
 package pack;
 
 public class Labyrinthe {
-	private NosObjets*[][] laby ;
+	private NosObjets[][] laby ;
 	private int nb_ligne;
 	private int nb_col;
 	Labyrinthe(int lignes,int colonnes)
 	{
 		nb_ligne=lignes;
 		nb_col=colonnes;
-		laby=new NosObjets*[nb_ligne][nb_col];
+		laby=new NosObjets[nb_ligne][nb_col];
 	}
 	public void affiche()
 	{
