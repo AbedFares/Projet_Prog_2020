@@ -8,13 +8,15 @@ public class EspeceHumaine extends NosObjets {
 		super(type, n, m);
 		immunite=5;
 		vivant=true;}
-	protected  void deplacer (String a )	{
-		
+
+
+	public EspeceHumaine() {}		
 	 /*do {
 	 System.out.println ("entrez une direction");
 	 Scanner input=new Scanner (System.in);
 	 a=input.nextLine ();}
 	 while ( a != "haut" && a!="bas" && a!="gauche" && a!="droite");*/
+protected  void deplacer (String a )	{
 		 if (( a.contentEquals("haut")) )
 	        	positionX+=1;
 	        else if((a.contentEquals("bas")) )
@@ -47,5 +49,6 @@ public class EspeceHumaine extends NosObjets {
 			 vivant=false;
 		 return (vivant);
 	 }
-
 }
+
+
