@@ -1,5 +1,5 @@
 package pack;
-
+import java.util.Scanner;
 public class Labyrinthe {
 	private NosObjets[][] laby ;
 	private int nb_ligne;
