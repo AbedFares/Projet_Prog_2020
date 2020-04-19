@@ -1,6 +1,5 @@
 package pack;
 
-class Virus extends NosObjets{
-	public Virus() {super();}
-	public Virus(int i, int j) {super(i,j);}
+public class Virus extends NosObjets{
+	Virus(int i, int j) {super(i,j);}
 }

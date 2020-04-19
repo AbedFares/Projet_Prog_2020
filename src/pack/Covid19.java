@@ -1,6 +1,9 @@
 package pack;
 
-class Covid19 extends Virus{
-	public Covid19(int i, int j) {super(i,j); caractere='C';}
-
+public class Covid19 extends Virus{
+	Covid19(int i, int j) {super(i,j);type="Covid19";}
+	protected void afficher() {
+		System.out.print ("C");
+		
+	}
 }

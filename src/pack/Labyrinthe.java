@@ -1,77 +1,6 @@
-package labyrinthe;
-
-public class NosObjets {
-	protected int lignes , colonnes ;
-	protected int positionX , positionY ;
-	protected String type ;
-
-	NosObjets (String type , int n , int m ){
-		
-		positionX = n;
-		positionY = m;
-		this.type = type ;
-}
-	protected void afficher() {
-		System.out.println ("cette case contient  " + type);
-		
-	}
-	protected int get_positionx() {
-		return (positionX);
-	}
-	protected int get_positiony() {
-		return (positionY);
-	}
-}
-package labyrinthe;
-import java.util.*;
-
-
-public class EspeceHumaine extends NosObjets {
-	int immunite;
-	boolean vivant;
-
-	EspeceHumaine (String type , int n , int m ) {
-		super(type, n, m);
-		immunite=5;
-		vivant=true;}
-	protected  void deplacement (String a )	{
-		
-	 /*do {
-	 System.out.println ("entrez une direction");
-	 Scanner input=new Scanner (System.in);
-	 a=input.nextLine ();}
-	 while ( a != "haut" && a!="bas" && a!="gauche" && a!="droite");*/
-		 if (( a=="haut" ) )
-	        	positionX+=1;
-	        else if((a=="bas") )
-	        	positionX-=1;
-	        else if((a=="droite") )
-	        	positionY+=1;
-	        else if((a=="gauche") )
-	        	positionY-=1;
-		
-		 	 
-	 }
-	 protected void rencontre (NosObjets objet) {
-		if (objet.type=="covid") 
-			{immunite-=3;
-			alert() ;}
-			else if (objet.type=="virus_faible")
-				immunite-=1;
-			else if (objet.type=="potion_energie")
-				immunite=5;
-		 }
-	 protected void alert () {}
-	 protected boolean est_vivant () {
-		 if (immunite<=0)
-			 vivant=false;
-		 return (vivant);
-	 }
-
-}
-
 package pack;
 import java.util.Scanner;
+import java.util.*;
 public class Labyrinthe {
 	private NosObjets[][] laby ;
 	private int nb_ligne;
@@ -88,41 +17,66 @@ public class Labyrinthe {
 		{
 			for (int j=0;j<nb_col;j++)
 			{
-				laby[i][j].affiche();
+				laby[i][j].afficher();
+				System.out.print(" ");
 			}
 			System.out.println();
 		}
 	}
 	public void deplacer(String coup)
 	{
-		int lig_dep=something.get_positionx;
-		int col_dep=something.get_positiony;
-		int	code_move=laby[lig_dep][col_dep].deplacer(coup);
-		if (code_move==1)//haut
+		int lig_dep=0;
+		int col_dep=0;
+		for (int i=0;i<nb_ligne;i++)
 		{
-			int code_rencontre=laby[lig_dep][col_dep].rencontrer(lig_dep-1,col_dep);
-			laby[lig_dep-1][col_dep]=laby[lig_dep][col_dep];
-			laby[lig_dep][col_dep]=new NosObjets();
+			for (int j=0;j<nb_col;j++)
+			{
+				if (laby[i][j].get_type()=="Homme")
+				{
+					lig_dep=i;
+					col_dep=j;
+				}
+			}
 		}
-		else if (code_move==2)//droit
+		System.out.println(lig_dep+" " +col_dep);
+
+		laby[lig_dep][col_dep].deplacer(coup);
+		if( (coup.contentEquals("haut")) && (lig_dep-1>=0) )//haut
 		{
-			int code_rencontre=laby[lig_dep][col_dep].rencontrer(lig_dep,col_dep+1);
+			laby[lig_dep][col_dep].rencontre(lig_dep-1,col_dep,laby);
+			laby[lig_dep-1][col_dep]=laby[lig_dep][col_dep];
+			laby[lig_dep][col_dep]=new NosObjets(".",lig_dep,col_dep);	
+		}
+		else if( (coup.contentEquals("droite")) && (col_dep+1<nb_col) )//droite
+		{
+			laby[lig_dep][col_dep].rencontre(lig_dep,col_dep+1,laby);
 			laby[lig_dep][col_dep+1]=laby[lig_dep][col_dep];
-			laby[lig_dep][col_dep]=new NosObjets();			
+			laby[lig_dep][col_dep]=new NosObjets(".",lig_dep,col_dep);			
 		}
-		else if (code_move==3)//bas
+		else if( (coup.contentEquals("bas")) && (lig_dep+1<nb_ligne) )//bas
 		{
-			int code_rencontre=laby[lig_dep][col_dep].rencontrer(lig_dep+1,col_dep);
+			laby[lig_dep][col_dep].rencontre(lig_dep+1,col_dep,laby);
 			laby[lig_dep+1][col_dep]=laby[lig_dep][col_dep];
-			laby[lig_dep][col_dep]=new NosObjets();			
+			laby[lig_dep][col_dep]=new NosObjets(".",lig_dep,col_dep);			
 		}
-		else if (code_move==4)//gauche
+		else if ((coup.contentEquals("gauche")) && (col_dep-1>=0) )//gauche
 		{
-			int code_rencontre=laby[lig_dep][col_dep].rencontrer(lig_dep-1,col_dep);
-			laby[lig_dep-1][col_dep]=laby[lig_dep][col_dep];
-			laby[lig_dep][col_dep]=new NosObjets();			
+			laby[lig_dep][col_dep].rencontre(lig_dep,col_dep-1,laby);
+			laby[lig_dep][col_dep-1]=laby[lig_dep][col_dep];
+			laby[lig_dep][col_dep]=new NosObjets(".",lig_dep,col_dep);			
 		}
 		else System.out.println("illegal");
+	}
+	public String lire_coup()
+	{
+		   Scanner put = new Scanner(System.in);
+		   String coup=put.nextLine();
+		   while (!coup.contentEquals("haut") && !coup.contentEquals("bas") && !coup.contentEquals("gauche") && !coup.contentEquals("droite"))
+		   {
+			   coup=put.nextLine();
+		   }
+		   return coup;
+		   
 	}
 	
 	public boolean ligne_valide(int ligne ) 
@@ -138,22 +92,22 @@ public class Labyrinthe {
 
 	public boolean colone_valide(int colone ) 
 	{
-		if(colone>=0 && colone<nb_colone) 
+		if(colone>=0 && colone<nb_col) 
 			return true;
 	    else 
 	    {
-	    	System.err.print("vous devez choisir un entier entre 0et"+nb_colone);
+	    	System.err.print("vous devez choisir un entier entre 0et"+nb_col);
 	    	return false; 
 	    }
     }
 
 	public boolean nombre_valide(int nb ) 
 	{
-		if(nb<=(nb_ligne*nb_colone)) 
+		if(nb<=(nb_ligne*nb_col)) 
 			return true;
 	    else 
 	    {
-	    	System.err.print("vous devez choisir un entier entre 0et"+(nb_colone*nb_colone));
+	    	System.err.print("vous devez choisir un entier entre 0 et"+(nb_ligne*nb_col));
 	    	return false;
 	    }
 	}
@@ -162,13 +116,13 @@ public class Labyrinthe {
 	{
 		int r=0;                     //verifier s'il existe encore des cases vide dans la labyrinthe
 	    for(int i=0;i<nb_ligne;i++) 
-	                 {
-	    	          for(int j=0;j<nb_colone;j++)
-	                   {
-	    	        	  if(laby[i][j].get_caractere()=='.') 
-	    	        		  r+=1;
-	    	        	}
-	    	          }
+	    {
+	    	for(int j=0;j<nb_col;j++)
+	        {
+	    		if(laby[i][j].get_type()==".") 
+	    			r+=1;
+	    	}
+	    }
 	    if(nb<=r)
 	    	return true;
 	    else 
@@ -177,6 +131,13 @@ public class Labyrinthe {
 
 	public void initialisation()
 	{
+		for (int i=0;i<nb_ligne;i++)
+		{
+			for (int j=0;j<nb_col;j++)
+			{
+				laby[i][j]=new NosObjets(".",i,j);
+			}
+		}
 		int ligne,colone,ligneA,coloneA,nbcovid,nbVfaible,nl,nc,nl1,nc1,nbgel,nl2,nc2,nbp,nl3,nc3;
 	    Scanner put = new Scanner(System.in);
 	    System.out.println("entrer les positions de votre case de départ");//entrer les positions du case de départ
@@ -193,8 +154,8 @@ public class Labyrinthe {
 		   colone=put.nextInt();
 		}
 	   while(this.colone_valide(colone)==false);
-	   laby[ligne][colone].set_caractere('D'); // caractere 'D' signifie case de Départ
-	   laby[ligne][colone]=new Homme(ligne,colone);
+	  // laby[ligne][colone].set_type("Homme"); // caractere 'D' signifie case de Départ // type Homme !
+	   laby[ligne][colone]=new EspeceHumaine("Homme",ligne,colone);
 	   System.out.println("entrer les positions de votre case d'arrivé");//entrer les positions du case d'arrivé
 	   do
 	   {
@@ -209,14 +170,14 @@ public class Labyrinthe {
 		  coloneA=put.nextInt();
 	  }
 	  while(this.colone_valide(coloneA)==false);	
-	   laby[ligne][colone].set_caractere('X');// caractere 'X' signifie case d'arrivé
+	   laby[ligneA][coloneA].set_type("Arrive");// caractere 'X' signifie case d'arrivé // type "Arrivee" signifie case d'arrive
 
 	  do
 	  {
 		  System.out.println("donner le nombre des virus de type covid19");//entrer le nb des virus covid
 		  nbcovid=put.nextInt();
 	  }
-	  while((this.nombre_valide(nbcovid)==false)||(this.existeEspace(nbcovid)));                                      
+	  while((this.nombre_valide(nbcovid)==false)||(!this.existeEspace(nbcovid)));                                      
 	  System.out.println("vous devez positioner les virus covid19");             //positionnement des virus covid19                         
 	  for(int i=0;i<nbcovid;i++) 
 	      {         
@@ -240,7 +201,7 @@ public class Labyrinthe {
 		  System.out.println("donner le nombre des virus faible ");//entrer le nb des virus faible
 		  nbVfaible=put.nextInt();
 	  }
-	  while((this.nombre_valide(nbVfaible)==false)||(this.existeEspace(nbVfaible)));                                      
+	  while((this.nombre_valide(nbVfaible)==false)||(!this.existeEspace(nbVfaible)));                                      
 	  System.out.println("vous devez positioner les virus faible");                     //positionnement des virus faible                 
 	  for(int i=0;i<nbVfaible;i++) 
 	     {         
@@ -264,31 +225,31 @@ public class Labyrinthe {
 		System.out.println("donner le nombre du gel désinfectant ");//entrer le nb du gel désinfectant
 		nbgel=put.nextInt();
      }
-	while((this.nombre_valide(nbgel)==false)||(this.existeEspace(nbgel)));                                      
+	while((this.nombre_valide(nbgel)==false)||(!this.existeEspace(nbgel)));                                      
 	System.out.println("vous devez positioner le gel désinfectant");        //positionnement du gel désinfectant                
 	for(int i=0;i<nbgel;i++) 
-	  {         
-		  do
-		   {
-			 System.out.println("donner le n°ligne du gel désinfectant"+(i+1));
+	{         
+		do
+		{
+			System.out.println("donner le n°ligne du gel désinfectant"+(i+1));
 			nl2=put.nextInt();
-			}
-		  while(this.ligne_valide(nl2)==false);      
-		  do
-		   {
+		}
+		while(this.ligne_valide(nl2)==false);      
+		do
+		{
 			System.out.println("donner le n°colone du gel désinfectant"+(i+1));
 			nc2=put.nextInt();
-		   }
-		  while(this.colone_valide(nc2)==false);
-		  laby[nl2][nc2]=new GelDesinfectant(nl2,nc2);
-	   }
+		}
+		while(this.colone_valide(nc2)==false);
+		laby[nl2][nc2]=new GelDesinfectant(nl2,nc2);
+	 }
 
 	do
 	 {
 		System.out.println("donner le nombre des potions d'énergie ");//entrer le nb des potions d'énergie 
 		nbp=put.nextInt();
 	  }
-	while((this.nombre_valide(nbp)==false)||(this.existeEspace(nbp)));                                      
+	while((this.nombre_valide(nbp)==false)||(!this.existeEspace(nbp)));                                      
 	System.out.println("vous devez positioner les potions d'énergie");        //positionnement des potions d'énergie             
 	for(int i=0;i<nbp;i++) 
 	    {         
@@ -307,5 +268,31 @@ public class Labyrinthe {
 		  laby[nl3][nc3]=new PotionEnergie(nl3,nc3);
 		}
 
-}
-}
+	}
+/*	public NosObjets Homme_dep() {
+		for (int i=0;i<nb_ligne;i++)
+		{
+			for (int j=0;j<nb_col;j++)
+			{
+				if (laby[i][j].get_type()=="Homme")
+				{
+					return laby[i][j];
+				}
+			}
+		}
+	}*/
+	public static void main(String args[]) {
+		Labyrinthe maze=new Labyrinthe(4,4);
+		maze.initialisation();
+		NosObjets Homme;
+		maze.affiche();
+		//Homme=maze.Homme_dep();
+		String coup;
+		while (true ) {
+			coup=maze.lire_coup();
+			maze.deplacer(coup);
+			maze.affiche();
+		}
+		
+	}
+};

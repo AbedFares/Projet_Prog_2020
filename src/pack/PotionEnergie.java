@@ -1,6 +1,10 @@
 package pack;
 
-class PotionEnergie extends AntiVirus {
-	public PotionEnergie (int i, int j) {super(i,j);caractere='P';}
+public class PotionEnergie extends AntiVirus {
+	PotionEnergie (int i, int j) {super(i,j);type="PotionEnergie";}
+	protected void afficher() {
+		System.out.print ("P");
+		
+	}
 
 }
