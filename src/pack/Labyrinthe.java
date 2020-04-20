@@ -6,6 +6,7 @@ public class Labyrinthe {
 	private NosObjets[][] laby ;
 	private int nb_ligne;
 	private int nb_colone;
+	private boolean termine;
 	
 	Labyrinthe(int lignes,int colonnes)
 	{
@@ -25,6 +26,10 @@ public class Labyrinthe {
 			System.out.println();
 		}
 	}
+	public boolean test_termine(NosObjets homme)
+	{
+		return laby[homme.positionX][homme.positionY].get_test();
+	}
 	public void deplacer(String coup)
 	{
 		int lig_dep=0;
@@ -40,7 +45,7 @@ public class Labyrinthe {
 				}
 			}
 		}
-		System.out.println(lig_dep+" " +col_dep);
+		//System.out.println(lig_dep+" " +col_dep);
 
 		laby[lig_dep][col_dep].deplacer(coup);
 		if( (coup.contentEquals("haut")) && (lig_dep-1>=0) )//haut
@@ -369,10 +374,10 @@ public class Labyrinthe {
 		}
 
 	}
-/*	public NosObjets Homme_dep() {
+	public NosObjets Homme_dep() {
 		for (int i=0;i<nb_ligne;i++)
 		{
-			for (int j=0;j<nb_col;j++)
+			for (int j=0;j<nb_colone;j++)
 			{
 				if (laby[i][j].get_type()=="Homme")
 				{
@@ -380,7 +385,8 @@ public class Labyrinthe {
 				}
 			}
 		}
-	}*/
+		return laby[0][0];
+	}
 
 	public static void main(String args[]) {
 		Labyrinthe maze=new Labyrinthe(4,4);
@@ -388,13 +394,18 @@ public class Labyrinthe {
 		maze.initialisation();
 		NosObjets Homme;
 		maze.affiche();
-		//Homme=maze.Homme_dep();
+		Homme=maze.Homme_dep();
 		String coup;
-		while (true ) {
+		while (Homme.est_exist() && !maze.test_termine(Homme)) {
 			coup=maze.lire_coup();
 			maze.deplacer(coup);
 			maze.affiche();
+
 		}
+		if (!Homme.est_exist())
+			System.out.println("Perdu");
+		else if (maze.test_termine(Homme))
+			System.out.println("Gagnant");
 		
 	}
 };

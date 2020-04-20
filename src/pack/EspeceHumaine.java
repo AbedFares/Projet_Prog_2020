@@ -2,12 +2,12 @@ package pack;
 
 public class EspeceHumaine extends NosObjets {
 	int immunite;
-	boolean vivant;
+
 
 	EspeceHumaine (String type , int n , int m ) {
 		super(type, n, m);
 		immunite=5;
-		vivant=true;}
+		exist=true;}
 
 
 	public EspeceHumaine() {}		
@@ -42,13 +42,24 @@ protected  void deplacer (String a )	{
 				immunite-=1;
 			else if (laby[lig_dest][col_dest].type=="PotionEnergie")
 				immunite=5;
+			else if (laby[lig_dest][col_dest].type=="Arrive")
+				immunite=6;//Si il arrive a la case de depart 
 		 }
 	 protected void alert () {}
 	 protected boolean est_vivant () {
 		 if (immunite<=0)
-			 vivant=false;
-		 return (vivant);
+			 exist=false;
+		 return (exist);
 	 }
+	 public int get_immunite() {return immunite;}
+	public boolean est_exist() 
+	{		 
+		if (immunite<=0)
+			exist=false;
+		return (exist);
+	}
+	public boolean get_test() { if (immunite==6) return true;else return false;}
+
 }
 
 

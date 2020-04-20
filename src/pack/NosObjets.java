@@ -3,6 +3,8 @@ package pack;
 public class NosObjets {
 	protected int positionX , positionY ;
 	protected String type ;//Covid19,PotionEnergie,FaibleVirus
+	protected boolean exist;
+
     public NosObjets(){} 
 	public NosObjets (String type , int n , int m ){	
 		positionX = n;
@@ -32,5 +34,7 @@ public class NosObjets {
 	{
 		return (type);
 	}
-	protected boolean est_vivant() {return false;}
+	public boolean est_exist() {return exist;}
+	public int get_immunite() {return 100;}
+	public boolean get_test() { return false;}
 }
