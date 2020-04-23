@@ -30,7 +30,7 @@ public class Labyrinthe {
 	{
 		return laby[homme.positionX][homme.positionY].get_test();
 	}
-	public void deplacer(String coup)
+	public void mise_jour(String coup,Timing objet)
 	{
 		int lig_dep=0;
 		int col_dep=0;
@@ -46,33 +46,35 @@ public class Labyrinthe {
 			}
 		}
 		//System.out.println(lig_dep+" " +col_dep);
-
-		laby[lig_dep][col_dep].deplacer(coup);
 		if( (coup.contentEquals("haut")) && (lig_dep-1>=0) )//haut
 		{
-			laby[lig_dep][col_dep].rencontre(lig_dep-1,col_dep,laby);
+			laby[lig_dep][col_dep].deplacer(coup);
+			laby[lig_dep][col_dep].rencontre(lig_dep-1,col_dep,laby,objet);
 			laby[lig_dep-1][col_dep]=laby[lig_dep][col_dep];
 			laby[lig_dep][col_dep]=new NosObjets(".",lig_dep,col_dep);	
 		}
 		else if( (coup.contentEquals("droite")) && (col_dep+1<nb_colone) )//droite
 		{
-			laby[lig_dep][col_dep].rencontre(lig_dep,col_dep+1,laby);
+			laby[lig_dep][col_dep].deplacer(coup);
+			laby[lig_dep][col_dep].rencontre(lig_dep,col_dep+1,laby,objet);
 			laby[lig_dep][col_dep+1]=laby[lig_dep][col_dep];
 			laby[lig_dep][col_dep]=new NosObjets(".",lig_dep,col_dep);			
 		}
 		else if( (coup.contentEquals("bas")) && (lig_dep+1<nb_ligne) )//bas
 		{
-			laby[lig_dep][col_dep].rencontre(lig_dep+1,col_dep,laby);
+			laby[lig_dep][col_dep].deplacer(coup);
+			laby[lig_dep][col_dep].rencontre(lig_dep+1,col_dep,laby,objet);
 			laby[lig_dep+1][col_dep]=laby[lig_dep][col_dep];
 			laby[lig_dep][col_dep]=new NosObjets(".",lig_dep,col_dep);			
 		}
 		else if ((coup.contentEquals("gauche")) && (col_dep-1>=0) )//gauche
 		{
-			laby[lig_dep][col_dep].rencontre(lig_dep,col_dep-1,laby);
+			laby[lig_dep][col_dep].deplacer(coup);
+			laby[lig_dep][col_dep].rencontre(lig_dep,col_dep-1,laby,objet);
 			laby[lig_dep][col_dep-1]=laby[lig_dep][col_dep];
 			laby[lig_dep][col_dep]=new NosObjets(".",lig_dep,col_dep);			
 		}
-		else System.out.println("illegal");
+		else {System.out.println("illegal");System.out.println(" ");}
 	}
 	public String lire_coup()
 	{
@@ -278,6 +280,13 @@ public class Labyrinthe {
 	}
 	public void initialiseRandom()//methode initialiser avec positionnement al�atoire des virus et anti virus
 	{ 
+		for (int i=0;i<nb_ligne;i++)
+		{
+			for (int j=0;j<nb_colone;j++)
+			{
+				laby[i][j]=new NosObjets(".",i,j);
+			}
+		}
 		int ligne,colone,ligneA,coloneA,nbcovid,nbVfaible,nl,nc,nl1,nc1,nbgel,nl2,nc2,nbp,nl3,nc3;
 	    Scanner put = new Scanner(System.in);
 	    System.out.println("entrer les positions de votre case de départ");//entrer les positions du case de départ
@@ -310,22 +319,28 @@ public class Labyrinthe {
 		  coloneA=put.nextInt();
 	  }
 	  while(this.colone_valide(coloneA)==false);	
-	   laby[ligne][colone].set_type("Arrive");// caractere 'X' signifie case d'arrivé
-
+	   laby[ligneA][coloneA].set_type("Arrive");//String "Arrive" signifie case d'arrivé
+	   
 	  do
 	  {
 		  System.out.println("donner le nombre des virus de type covid19");//entrer le nb des virus covid
 		  nbcovid=put.nextInt();
-	  }
-	  while((this.nombre_valide(nbcovid)==false)||(this.existeEspace(nbcovid)));                                      
+	     //s System.out.println("s");
 
-	   //positionnement des virus covid19 aleatoirement                         
+	  }
+	  while( (this.nombre_valide(nbcovid)==false) || (!this.existeEspace(nbcovid)) );                                      
+
+	   //positionnement des virus covid19 aleatoirement   
+
 	  Random rand = new Random();
 	  for(int i=0;i<nbcovid;i++) 
 	      {         
             nl = rand.nextInt(nb_ligne); 
             nc = rand.nextInt(nb_colone);
-            laby[nl][nc]=new Covid19(nl,nc);
+            if (laby[nl][nc].get_type().contentEquals("."))
+            	laby[nl][nc]=new Covid19(nl,nc);
+            else 
+            	i--;
 	      }
 
 	  do
@@ -333,14 +348,17 @@ public class Labyrinthe {
 		  System.out.println("donner le nombre des virus faible ");//entrer le nb des virus faible
 		  nbVfaible=put.nextInt();
 	  }
-	  while((this.nombre_valide(nbVfaible)==false)||(this.existeEspace(nbVfaible)));                                      
+	  while((this.nombre_valide(nbVfaible)==false)||(!this.existeEspace(nbVfaible)));                                      
 	 
 	  //positionnement des virus faible                 
 	  for(int i=0;i<nbVfaible;i++) 
 	     {         
           nl1 = rand.nextInt(nb_ligne); 
           nc1 = rand.nextInt(nb_colone);
-		    laby[nl1][nc1]=new VirusFaible(nl1,nc1);
+          if (laby[nl1][nc1].get_type().contentEquals("."))
+          	laby[nl1][nc1]=new VirusFaible(nl1,nc1);
+          else 
+          	i--;
 		  }
 
 	do
@@ -348,14 +366,17 @@ public class Labyrinthe {
 		System.out.println("donner le nombre du gel désinfectant ");//entrer le nb du gel désinfectant
 		nbgel=put.nextInt();
      }
-	while((this.nombre_valide(nbgel)==false)||(this.existeEspace(nbgel)));                                      
+	while((this.nombre_valide(nbgel)==false)||(!this.existeEspace(nbgel)));                                      
 	 
 	//positionnement du gel désinfectant                
 	for(int i=0;i<nbgel;i++) 
 	  {         
         nl2 = rand.nextInt(nb_ligne); 
         nc2= rand.nextInt(nb_colone);
-		  laby[nl2][nc2]=new GelDesinfectant(nl2,nc2);
+        if (laby[nl2][nc2].get_type().contentEquals("."))
+        	laby[nl2][nc2]=new GelDesinfectant(nl2,nc2);
+        else 
+        	i--;
 	   }
 
 	do
@@ -363,14 +384,17 @@ public class Labyrinthe {
 		System.out.println("donner le nombre des potions d'énergie ");//entrer le nb des potions d'énergie 
 		nbp=put.nextInt();
 	  }
-	while((this.nombre_valide(nbp)==false)||(this.existeEspace(nbp)));                                      
+	while((this.nombre_valide(nbp)==false)||(!this.existeEspace(nbp)));                                      
 
 	//positionnement des potions d'énergie             
 	for(int i=0;i<nbp;i++) 
 	    {         
         nl3 = rand.nextInt(nb_ligne); 
         nc3 = rand.nextInt(nb_colone);
-		  laby[nl3][nc3]=new PotionEnergie(nl3,nc3);
+        if (laby[nl3][nc3].get_type().contentEquals("."))
+        	laby[nl3][nc3]=new PotionEnergie(nl3,nc3);
+        else 
+        	i--;
 		}
 
 	}
@@ -391,21 +415,26 @@ public class Labyrinthe {
 	public static void main(String args[]) {
 		Labyrinthe maze=new Labyrinthe(4,4);
 		System.out.println("Labyrinthe pour le moment a 4 lignes et 4 colonnes just pour tester");
-		maze.initialisation();
+		Timing objet=new Timing();
+		//maze.initialisation();
+		maze.initialiseRandom();
 		NosObjets Homme;
 		maze.affiche();
 		Homme=maze.Homme_dep();
 		String coup;
-		while (Homme.est_exist() && !maze.test_termine(Homme)) {
+		while (Homme.est_exist() && !maze.test_termine(Homme) ) {
 			coup=maze.lire_coup();
-			maze.deplacer(coup);
+			maze.mise_jour(coup,objet);
 			maze.affiche();
-
 		}
 		if (!Homme.est_exist())
-			System.out.println("Perdu");
+			{
+				System.out.println("Perdu");
+				objet.set_gel_intime(true);
+			}
 		else if (maze.test_termine(Homme))
 			System.out.println("Gagnant");
+		return;
 		
 	}
 };

@@ -29,21 +29,25 @@ protected  void deplacer (String a )	{
 		 	 
 	 }
 	protected void afficher() {
-		System.out.print ("H");
+		System.out.print("H");
 		
 	}
-	 protected void rencontre (int lig_dest,int col_dest,NosObjets[][] laby) {
+	 protected void rencontre (int lig_dest,int col_dest,NosObjets[][] laby, Timing objet) {
 		positionX=lig_dest;
 		positionY=col_dest;
 		if (laby[lig_dest][col_dest].type=="Covid19") 
 			{immunite-=3;
-			alert() ;}
+			objet.start() ;}
 			else if (laby[lig_dest][col_dest].type=="FaibleVirus")
 				immunite-=1;
 			else if (laby[lig_dest][col_dest].type=="PotionEnergie")
 				immunite=5;
 			else if (laby[lig_dest][col_dest].type=="Arrive")
 				immunite=6;//Si il arrive a la case de depart 
+			else if (laby[lig_dest][col_dest].type=="Geldesinf")
+			{
+				objet.set_gel_intime(true);
+			}
 		 }
 	 protected void alert () {}
 	 protected boolean est_vivant () {

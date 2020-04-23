@@ -25,7 +25,7 @@ public class NosObjets {
 		return (positionY);
 	}
 	protected void deplacer(String a) {}
-	 protected void rencontre (int lig_dest,int col_dest,NosObjets[][] laby) {}
+	 protected void rencontre (int lig_dest,int col_dest,NosObjets[][] laby,Timing objet) {}
 	 protected void set_type(String a)
 	 {
 		 type=a;
