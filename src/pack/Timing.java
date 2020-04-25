@@ -14,7 +14,7 @@ public class Timing {
 
 				if (seconds==10) {
 				set_covid_surv(false);
-				System.out.println("killed by covid!");
+				System.out.println("\u001b[1;31mkilled by covid!\u001b[0m");
 				System.exit(0);
 				} else if (gel_intime) {
 					cancel();

@@ -26,10 +26,10 @@ protected  void deplacer (String a )	{
 	        else if((a.contentEquals("gauche")) )
 	        	positionY-=1;
 		
-		 	 
+		
 	 }
 	protected void afficher() {
-		System.out.print("H");
+		System.out.print("\u001b[1;37mH\u001b[0m");
 		
 	}
 	 protected void rencontre (int lig_dest,int col_dest,NosObjets[][] laby, Timing objet) {
