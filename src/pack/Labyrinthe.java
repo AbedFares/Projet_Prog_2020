@@ -157,7 +157,7 @@ public class Labyrinthe {
 	    	{
 	    		laby= new NosObjets[nbre_ligne][nbre_colone];
 	    		nb_ligne=nbre_ligne;
-	    		nb_colone=nbre_ligne;
+	    		nb_colone=nbre_colone;
 	    		test=false;
 	    	}
 	    	else
@@ -610,19 +610,34 @@ while (bo)
 			}
 		 
 	   }
+	public void choisirgenre() {
+		System.out.println("Vous etes (enfant/femme/homme)");
+	    Scanner put = new Scanner(System.in);
+		   String choix=put.nextLine();
+		   while (!choix.contentEquals("homme") && !choix.contentEquals("femme") && !choix.contentEquals("enfant"))
+		   {
+			   choix=put.nextLine();
+		   }
+		   if(choix.contentEquals("enfant")) {System.out.println ("niveau des enfants");
+			   this.initialisation();}
+		   else {System.out.println ("Niveau des adultes");
+		   choisirMode();}
+		   
+		   
+	}
 		
 	public void choisirMode() {
 			
 		    System.out.println("le Mode du jeux (fichier/clavier/aleatoire)");
 		    Scanner put = new Scanner(System.in);
-			   String choix=put.nextLine();
-			   while (!choix.contentEquals("fichier") && !choix.contentEquals("clavier") && !choix.contentEquals("aleatoire"))
+			   String choix1=put.nextLine();
+			   while (!choix1.contentEquals("fichier") && !choix1.contentEquals("clavier") && !choix1.contentEquals("aleatoire"))
 			   {
-				   choix=put.nextLine();
+				   choix1=put.nextLine();
 			   }
-			   if(choix.contentEquals("fichier")) {this.initialiseFichier();}
-			   else if(choix.contentEquals("clavier")) {this.initialisation();}
-			   else if(choix.contentEquals("aleatoire")) {this.initialiseRandom();}
+			   if(choix1.contentEquals("fichier")) {this.initialiseFichier();}
+			   else if(choix1.contentEquals("clavier")) {this.initialisation();}
+			   else if(choix1.contentEquals("aleatoire")) {this.initialiseRandom();}
 	   }
 
 	
@@ -630,7 +645,8 @@ while (bo)
 
 		Labyrinthe maze=new Labyrinthe();
 		Timing objet=new Timing();
-		maze.choisirMode();
+		maze.choisirgenre();
+		//maze.choisirMode();
 		//maze.initialisation();
 		//maze.initialiseRandom();
 		NosObjets Homme;
