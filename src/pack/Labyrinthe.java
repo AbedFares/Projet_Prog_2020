@@ -1,5 +1,10 @@
 package pack;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import java.util.Scanner;
+import java.awt.FlowLayout;
 //import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
@@ -646,6 +651,9 @@ while (bo)
 		Labyrinthe maze=new Labyrinthe();
 		Timing objet=new Timing();
 		maze.choisirgenre();
+		maze.choisirMode();
+		
+
 		//maze.choisirMode();
 		//maze.initialisation();
 		//maze.initialiseRandom();
@@ -666,6 +674,7 @@ while (bo)
 		else if (maze.test_termine(Homme))
 			System.out.println("  \u001b[1;32mGAGNANT\u001b[0m");
 		return;
+		
 		
 	}
 };
