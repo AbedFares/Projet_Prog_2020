@@ -9,18 +9,22 @@ import java.io.File;
 //import java.util.*;
 import java.util.Random;
 public class Labyrinthe {
+	
 	private NosObjets[][] laby ;
 	private int nb_ligne;
 	private int nb_colone;
 	private boolean termine;
-	Labyrinthe(){}
-	Labyrinthe(int lignes,int colonnes)
+//__________________________________________________________________________________________________________
+	Labyrinthe(){} //constructeur par défaut 
+//__________________________________________________________________________________________________________	
+	Labyrinthe(int lignes,int colonnes) // constructeur parametre
 	{
 		nb_ligne=lignes;
 		nb_colone=colonnes;
 		laby=new NosObjets[nb_ligne][nb_colone];
 	}
-	public void affiche()
+//__________________________________________________________________________________________________________
+	public void affiche() // methode d'affichage
 	{
 		for (int i=0;i<nb_ligne;i++)
 		{
@@ -32,11 +36,13 @@ public class Labyrinthe {
 			System.out.println();
 		}
 	}
-	public boolean test_termine(NosObjets homme)
+//__________________________________________________________________________________________________________
+	public boolean test_termine(NosObjets homme)// methode qui verifie si le joueur est gagne ou non 
 	{
 		return laby[homme.positionX][homme.positionY].get_test();
 	}
-	public void mise_jour(String coup,Timing objet)
+//__________________________________________________________________________________________________________
+	public void mise_jour(String coup,Timing objet) // methode permettant la mise a jour de le labyrinthe selon le deplacement du joueur
 	{
 		int lig_dep=0;
 		int col_dep=0;
@@ -82,7 +88,8 @@ public class Labyrinthe {
 		}
 		else {System.out.println("illegal");System.out.println(" ");}
 	}
-	public String lire_coup()
+//__________________________________________________________________________________________________________
+	public String lire_coup() // methode permettant la saisie de la direction du joueur 
 	{
 		   Scanner put = new Scanner(System.in);
 		   String coup=put.nextLine();
@@ -93,8 +100,8 @@ public class Labyrinthe {
 		   return coup;
 		   
 	}
-	
-	public boolean ligne_valide(int ligne ) 
+//__________________________________________________________________________________________________________
+	public boolean ligne_valide(int ligne ) //methode qui verifie  la validite de du numero de la ligne saisie
 	{
 		if(ligne>=0 && ligne<nb_ligne) 
 			return true;
@@ -104,8 +111,8 @@ public class Labyrinthe {
         	return false; 
         }
 	}
-
-	public boolean colone_valide(int colone ) 
+//__________________________________________________________________________________________________________
+	public boolean colone_valide(int colone ) //methode qui verifie  la validite de du numero de la colonne saisie
 	{
 		if(colone>=0 && colone<nb_colone) 
 			return true;
@@ -115,8 +122,8 @@ public class Labyrinthe {
 	    	return false; 
 	    }
     }
-
-	public boolean nombre_valide(int nb ) 
+//__________________________________________________________________________________________________________
+	public boolean nombre_valide(int nb ) //methode qui verifie la validite du nombre saisie
 	{
 		if(nb<=(nb_ligne*nb_colone)) 
 			return true;
@@ -126,10 +133,10 @@ public class Labyrinthe {
 	    	return false;
 	    }
 	}
-
-	public boolean existeEspace(int nb) 
+//__________________________________________________________________________________________________________
+	public boolean existeEspace(int nb) //verifier s'il existe encore des cases vide dans la labyrinthe
 	{
-		int r=0;                     //verifier s'il existe encore des cases vide dans la labyrinthe
+		int r=0;                     
 	    for(int i=0;i<nb_ligne;i++) 
 	    {
 	    	for(int j=0;j<nb_colone;j++)
@@ -143,8 +150,8 @@ public class Labyrinthe {
 	    else 
 	    	return false ;
 	  }
-
-	public void initialisation()
+//__________________________________________________________________________________________________________
+	public void initialisation() //methode initialiser avec saisie clavier des positions des virus et anti virus et leurs nombres
 	{
 	    Scanner put = new Scanner(System.in);
 	    boolean test=true;
@@ -311,6 +318,7 @@ while (bo)
 	    }
 
 	}
+//__________________________________________________________________________________________________________
 	public void initialiseRandom()//methode initialiser avec positionnement aléatoire des virus et anti virus
 	{
 	    Scanner put = new Scanner(System.in);
@@ -445,7 +453,8 @@ while (bo)
 		}
 
 	}
-	public NosObjets Homme_dep() {
+//__________________________________________________________________________________________________________
+	public NosObjets Homme_dep() {  //methode qui cherche l'emplacement de l'etre humain
 		for (int i=0;i<nb_ligne;i++)
 		{
 			for (int j=0;j<nb_colone;j++)
@@ -458,8 +467,8 @@ while (bo)
 		}
 		return laby[0][0];
 	}
-
-	public void initialiseFichier() 
+//__________________________________________________________________________________________________________
+	public void initialiseFichier() //methode initialiser a partir d'un fichier contanant toutes les informations necessaires
 	   {
 			String nomfich;
 			// int ligne,colone,ligneA,coloneA,nbcovid,nbVfaible,nl,nc,nl1,nc1,nbgel,nl2,nc2,nbp,nl3,nc3;
@@ -611,7 +620,8 @@ while (bo)
 			}
 		 
 	   }
-	public void choisirgenre() {
+//__________________________________________________________________________________________________________
+	public void choisirgenre() { //methode permettant au joueur de choisir entre homme femme ou enfant 
 		System.out.println("Vous etes (enfant/femme/homme)");
 	    Scanner put = new Scanner(System.in);
 		   String choix=put.nextLine();
@@ -626,8 +636,8 @@ while (bo)
 		   
 		   
 	}
-		
-	public void choisirMode() {
+//__________________________________________________________________________________________________________	
+	public void choisirMode() { //methode permet de choisir le mode de saisie des donnees du jeux 
 			
 		    System.out.println("le Mode du jeux (fichier/clavier/aleatoire)");
 		    Scanner put = new Scanner(System.in);
@@ -641,7 +651,7 @@ while (bo)
 			   else if(choix1.contentEquals("aleatoire")) {this.initialiseRandom();}
 	   }
 
-	
+//__________________________________________________________________________________________________________
 	public static void main(String args[]) {
 
 		Labyrinthe maze=new Labyrinthe();

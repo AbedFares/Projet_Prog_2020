@@ -4,11 +4,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Timing {
-	boolean covid_surv=true;
-	int seconds;
-	boolean gel_intime=false;
+	boolean covid_surv=true;//Indique si le joueur a survécu l’attaque de Covid
+	int seconds;         //Un compteur pour le temps écoulé
+	boolean gel_intime=false; //Indique si le joueur a pris le gel en temps
 	Timer mytimer=new Timer();
-	public void start() {
+//__________________________________________________________________________________________________________
+	public void start() {    //Augmente l’attribut seconds lors de l’attaque du covid
 		mytimer.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
 
@@ -29,19 +30,24 @@ public class Timing {
 			}
 		},0, 1000);
 	}
-	public void set_covid_surv(boolean bo) {
+//__________________________________________________________________________________________________________
+	public void set_covid_surv(boolean bo) {//Changement de l’attribut covid_surv
 		covid_surv=bo;
 	}
-	public boolean get_covid_surv() {
+//__________________________________________________________________________________________________________
+	public boolean get_covid_surv() { //Retourne l’attribut covid_surv
 		return covid_surv;
 	}
-	public int get_seconds() {
+//__________________________________________________________________________________________________________
+	public int get_seconds() { //retourne l'attribue seconds
 		return seconds;
 	}
-	public void set_seconds(int a) {
+//__________________________________________________________________________________________________________
+	public void set_seconds(int a) {  //modifie l'attribue seconds
 		seconds=a;
 	}
-	public void set_gel_intime(boolean bo) {
+//__________________________________________________________________________________________________________
+	public void set_gel_intime(boolean bo) { //Changement de l’attribut gel_intime selon le paramètre
 		gel_intime=bo;
 	}
 
