@@ -664,20 +664,43 @@ while (bo)
 		}
 //__________________________________________________________________________________________________________
 	public void choisirgenre() { //methode permettant au joueur de choisir entre homme femme ou enfant 
-		System.out.println("Vous etes (enfant/femme/homme)");
+		System.out.println("Niveau du jeu");
 	    Scanner put = new Scanner(System.in);
-		   String choix=put.nextLine();
-		   while (!choix.contentEquals("homme") && !choix.contentEquals("femme") && !choix.contentEquals("enfant"))
-		   {
+		   String choix;
+		   //while (!choix.contentEquals("homme") && !choix.contentEquals("femme") && !choix.contentEquals("enfant"))
+			   System.out.println("Tapez l'un de ces mots : Homme /Femme /Enfant");
+			   do {
 			   choix=put.nextLine();
 		   }
-		   if(choix.contentEquals("enfant")) {System.out.println ("niveau des enfants");
-			   this.initialisation();}
-		   else {System.out.println ("Niveau des adultes");
-		   choisirMode();}
+			   while(this.choix_valide2(choix)==false);
+
+			   if(choix.contentEquals("enfant")) {
+				   
+					   System.out.println ("niveau des enfants");
+					   this.initialisation();}
+			   else if(choix.contentEquals("femme")) {
+				   System.out.println ("Niveau des adultes");
+			       choisirMode();}
+			   else if(choix.contentEquals("homme")) {
+				   System.out.println ("Niveau des adultes");
+			       choisirMode();}
 		   
+			   
 		   
 	}
+	//__________________________________________________________________________________________________________	
+
+	public boolean choix_valide2(String mot)
+	{
+		if(mot.contentEquals("enfant") || mot.contentEquals("femme") || mot.contentEquals("homme"))
+			return true;
+	    else 
+	    {
+	    	System.err.println("N.B :VOUS DEVEZ ENTRER SEULEMENT UN DE CES MOTS (en miniscule ): enfant /femme /homme");
+	    	return false;
+	    }
+	}
+
 //__________________________________________________________________________________________________________	
 
 	public boolean choix_valide(String mot)
