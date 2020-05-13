@@ -5,7 +5,7 @@ public class VirusFaible extends Virus{
 	VirusFaible(int i, int j) {super(i,j); type="FaibleVirus";}
 //__________________________________________________________________________________________________________	
 	protected void afficher() {// methode d'affichage (affiche le caractere significatif a VirusFaible "F") 
-		                        System.out.print ("\u001b[1;35mF\u001b[0m");
+		                        System.out.print ("\u001b[33mF\u001b[0m");
 		
 	                         }
 

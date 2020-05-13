@@ -30,7 +30,7 @@ public class EspeceHumaine extends NosObjets {
 	 }
 //_________________________________________________________________________________________________
 	protected void afficher() { // methode d'affichage (affiche le caractere significatif a Homme "H") 
-		System.out.print("\u001b[1;37mH\u001b[0m");
+		System.out.print("\u001b[36mH\u001b[0m");
 		
 	}
 //_________________________________________________________________________________________________
@@ -39,15 +39,20 @@ public class EspeceHumaine extends NosObjets {
 		positionY=col_dest;
 		if (laby[lig_dest][col_dest].type=="Covid19") 
 			{immunite-=3;
+			
+			System.out.println("\u001b[1;101mVOUS ETES ATTAQUE PAR UN COVID19! ESSAYEZ DE TROUVER UN GEL DESINFECTANT AU BOUT D'UNE MINUTE,SINON VOUS PERDEZ LA PARTIE.\u001b[0m");
 			objet.start() ;} // declonchement du chrono
 			else if (laby[lig_dest][col_dest].type=="FaibleVirus")
-				immunite-=1;
+				{immunite-=1;
+				System.out.println("\u001b[1;33mVous etes attaque par un virus faible! Votre immunite a ete decrementer de 1.  \u001b[0m"); }
 			else if (laby[lig_dest][col_dest].type=="PotionEnergie")
-				immunite=5;
+				{immunite=5;
+				System.out.println("\u001b[1;32mVous avez recuperez votre immunite maximale. :) \u001b[0m");}
 			else if (laby[lig_dest][col_dest].type=="Arrive")
-				immunite=6;    //Si il arrive a la case de depart son degre d'immunite =6, juste une convention pour notre code
+			{immunite=6;  //Si il arrive a la case de depart son degre d'immunite =6, juste une convention pour notre code
+			System.out.println("\u001b[1;32mFELICITATION ! Vous avez atteintes la case d'arrivee. \u001b[0m");} 
 			else if (laby[lig_dest][col_dest].type=="Geldesinf")
-			{
+			{   System.out.println("\u001b[1;34mVous avez depasse le danger ! Essayer maintemant de trouver un potion d'energie pour recuperer votre immunite.\u001b[0m ");
 				objet.set_gel_intime(true); // arret du chrono
 			}
 		 }

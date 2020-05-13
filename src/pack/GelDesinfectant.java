@@ -6,7 +6,7 @@ public class GelDesinfectant extends AntiVirus {
 		super(i,j);type="Geldesinf";}
 	//_________________________________________________________________________________________________
 	protected void afficher() {// methode d'affichage (affiche le caractere significatif a gelDesinfectant "G")
-		System.out.print ("\u001b[1;32mG\u001b[0m");
+		System.out.print ("\u001b[34mG\u001b[0m");
 		
 	}
 

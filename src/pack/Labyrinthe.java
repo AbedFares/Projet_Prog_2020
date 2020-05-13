@@ -35,6 +35,8 @@ public class Labyrinthe {
 			}
 			System.out.println();
 		}
+		
+		System.out.println("\n\u001b[1;102mVotre immunite est :\u001b[0m"+" "+this.Homme_dep().get_immunite()+"/5\n");	
 	}
 //__________________________________________________________________________________________________________
 	public boolean test_termine(NosObjets homme)// methode qui verifie si le joueur est gagne ou non 
@@ -57,6 +59,7 @@ public class Labyrinthe {
 				}
 			}
 		}
+		
 		//System.out.println(lig_dep+" " +col_dep);
 		if( (coup.contentEquals("haut")) && (lig_dep-1>=0) )//haut
 		{
@@ -86,17 +89,38 @@ public class Labyrinthe {
 			laby[lig_dep][col_dep-1]=laby[lig_dep][col_dep];
 			laby[lig_dep][col_dep]=new NosObjets(".",lig_dep,col_dep);			
 		}
-		else {System.out.println("illegal");System.out.println(" ");}
+		else {System.out.println("coup illegal");System.out.println(" ");}
+		
 	}
 //__________________________________________________________________________________________________________
+	
+	public boolean coup_valide(String coup)
+	{
+		if(coup.contentEquals("haut") || coup.contentEquals("bas") || coup.contentEquals("droite") || coup.contentEquals("gauche"))
+			return true;
+	    else 
+	    {
+	    	System.err.println("N.B:VOUS DEVEZ ENTRER SEULEMENT UN DE CES MOTS (en miniscule) : haut /bas /droite /gauche");
+	    	return false;
+	    }
+	}
+
+	
+//_______________________________________________________________________________________________________________	
 	public String lire_coup() // methode permettant la saisie de la direction du joueur 
 	{
 		   Scanner put = new Scanner(System.in);
-		   String coup=put.nextLine();
-		   while (!coup.contentEquals("haut") && !coup.contentEquals("bas") && !coup.contentEquals("gauche") && !coup.contentEquals("droite"))
-		   {
-			   coup=put.nextLine();
-		   }
+		   String coup;
+		   //while (!coup.contentEquals("haut") && !coup.contentEquals("bas") && !coup.contentEquals("gauche") && !coup.contentEquals("droite"))
+		   System.out.println("Choissisez un mot entre : haut /bas /droite /gauche pour pouvoir se deplacer ");
+		   do
+		   {  
+			   
+		       coup=put.nextLine();
+	       }
+	   while(this.coup_valide(coup)==false);
+	   
+
 		   return coup;
 		   
 	}
@@ -637,15 +661,37 @@ while (bo)
 		   
 	}
 //__________________________________________________________________________________________________________	
+
+	public boolean choix_valide(String mot)
+	{
+		if(mot.contentEquals("fichier") || mot.contentEquals("clavier") || mot.contentEquals("aleatoire"))
+			return true;
+	    else 
+	    {
+	    	System.err.println("N.B :VOUS DEVEZ ENTRER SEULEMENT UN DE CES MOTS (en miniscule ): fichier /clavier /aleatoire");
+	    	return false;
+	    }
+	}
+
+	
+	
+	
+//____________________________________________________________________________________________________
 	public void choisirMode() { //methode permet de choisir le mode de saisie des donnees du jeux 
 			
 		    System.out.println("le Mode du jeux (fichier/clavier/aleatoire)");
 		    Scanner put = new Scanner(System.in);
-			   String choix1=put.nextLine();
-			   while (!choix1.contentEquals("fichier") && !choix1.contentEquals("clavier") && !choix1.contentEquals("aleatoire"))
-			   {
+			   String choix1;
+			   //while (!choix1.contentEquals("fichier") && !choix1.contentEquals("clavier") && !choix1.contentEquals("aleatoire"))
+			   System.out.println("Tapez l'un de ces mots : fichier /clavier /aleatoire");
+			   do
+			   {  
+				   
 				   choix1=put.nextLine();
-			   }
+			    }
+			   
+			   while(this.choix_valide(choix1)==false);
+
 			   if(choix1.contentEquals("fichier")) {this.initialiseFichier();}
 			   else if(choix1.contentEquals("clavier")) {this.initialisation();}
 			   else if(choix1.contentEquals("aleatoire")) {this.initialiseRandom();}
@@ -653,7 +699,10 @@ while (bo)
 
 //__________________________________________________________________________________________________________
 	public static void main(String args[]) {
-
+	    System.out.println("                 \u001b[1;39m ___________________________________________\u001b[0m" );
+	    System.out.println("                 \u001b[1;39m|__________JEU Labyrinthe de Virus__________|\n\n\u001b[0m\n" ); 
+	    System.out.println("\u001b[1;36mH\u001b[0m : Joueur		           \u001b[1;31m C\u001b[0m :Covid19		          \u001b[1;33m F\u001b[0m :Virus faible");
+	    System.out.println("\u001b[1;34mG\u001b[0m : Gel desinfectant		    \u001b[1;32mP\u001b[0m :Potion d'energie		   \u001b[1;35mA\u001b[0m :Case d'arrivee\n");
 		Labyrinthe maze=new Labyrinthe();
 		Timing objet=new Timing();
 		maze.choisirgenre();

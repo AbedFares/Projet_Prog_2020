@@ -19,7 +19,7 @@ public class NosObjets {
 //__________________________________________________________________________________________________________
 	protected void afficher() { // methode d'affichage
 		if (type=="Arrive")  // Arrive => indique la case d'arrive 
-			System.out.print ("A");
+			System.out.print ("\u001b[35mA\u001b[0m");
 		else
 			System.out.print("."); // les cases vides ont comme caractere "."
 	}
