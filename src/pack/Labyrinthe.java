@@ -4,6 +4,7 @@ import java.util.Scanner;
 //import java.io.BufferedReader;
 //import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 //import java.io.FileInputStream;
 //import java.io.InputStreamReader;
 //import java.util.*;
@@ -492,158 +493,175 @@ while (bo)
 		return laby[0][0];
 	}
 //__________________________________________________________________________________________________________
-	public void initialiseFichier() //methode initialiser a partir d'un fichier contanant toutes les informations necessaires
+	public void initialiseFichier() throws FileNotFoundException//methode initialiser a partir d'un fichier contanant toutes les informations necessaires
 	   {
 			String nomfich;
 			// int ligne,colone,ligneA,coloneA,nbcovid,nbVfaible,nl,nc,nl1,nc1,nbgel,nl2,nc2,nbp,nl3,nc3;
 				
-			Scanner sc= new Scanner(System.in);
-			System.out.print("donnez le nom du fichier a lister : ") ; 
-			nomfich= sc.next() ;
-			nomfich+=".txt";
-			 
-			try{     
-				Scanner scan=new Scanner(new File(nomfich));
+			
+			boolean fich=true;
+			while (fich)
+			{
+				try
+				{	
+					Scanner sc= new Scanner(System.in);
+					System.out.print("donnez le nom du fichier a lister : ") ; 
+					nomfich= sc.next() ;
+					nomfich+=".txt";
+					Scanner scan=new Scanner(new File(nomfich));
+					fich=false;
 			 	/*while(scan.hasNextInt()) {
 			 		System.out.println(scan.nextInt());
 			 	}*/
-				int nbre_ligne=scan.nextInt();
-				int nbre_colone=scan.nextInt();
-				if (nbre_ligne>0 && nbre_colone>0)
-				{
-					laby= new NosObjets[nbre_ligne][nbre_colone];
-				}
-				else
-				{
-					System.err.println("Le nombre de ligne et le nombre de colonne doivent etre > 0 ");
-				}
-				nb_ligne=nbre_ligne;
-				nb_colone=nbre_colone;
-				for (int i=0;i<nb_ligne;i++)
-				{
-					for (int j=0;j<nb_colone;j++)
+					int nbre_ligne=scan.nextInt();
+					int nbre_colone=scan.nextInt();
+					if (nbre_ligne>0 && nbre_colone>0)
 					{
-						laby[i][j]=new NosObjets(".",i,j);
+						laby= new NosObjets[nbre_ligne][nbre_colone];
 					}
-				}
-				int dep_lig=scan.nextInt();
-				int dep_col=scan.nextInt();
-				if(this.ligne_valide(dep_lig)&&this.ligne_valide(dep_col))
-				{laby[dep_lig][dep_col]=new EspeceHumaine("Homme",dep_lig,dep_col);}//case de depart
-				else
-				{
-					System.out.println("Le positionnement de la case de depart est invalide");
-					System.exit(0);
-				}
-					
-				int ligneA=scan.nextInt();
-				int coloneA=scan.nextInt();
-				if(this.ligne_valide(ligneA)&&this.ligne_valide(coloneA))
-				{laby[ligneA][coloneA].set_type("Arrive");}// case d'arrive
-				else
-				{
-					System.out.println("Le positionnement de la case d'arrivee est invalide");
-					System.exit(0);
-				}
-				int nbcovid=scan.nextInt();
-				int i=0;
-				if (this.nombre_valide(nbcovid) && this.existeEspace(nbcovid)) {
-					while(i<nbcovid)
+					else
 					{
-						int nl=scan.nextInt();
-						int nc=scan.nextInt();
-						laby[nl][nc]=new Covid19(nl,nc);
-						if(this.ligne_valide(nl)&&this.ligne_valide(nc))
-						{laby[nl][nc]=new Covid19(nl,nc);}
-						else
+						System.err.println("Le nombre de ligne et le nombre de colonne doivent etre > 0 ");
+					}
+					nb_ligne=nbre_ligne;
+					nb_colone=nbre_colone;
+					for (int i=0;i<nb_ligne;i++)
+					{
+						for (int j=0;j<nb_colone;j++)
 						{
-							System.out.println("Le positionnement de Covid19 est invalide");
-							System.exit(0);
+							laby[i][j]=new NosObjets(".",i,j);
 						}
-						i++;
 					}
-				}
-				else
-				{
-					System.out.println("Le nombre de COVID19 est invalide");
-					System.exit(0);
-				}
-				int nbVfaible=scan.nextInt();
-				int j=0;
-				if (this.nombre_valide(nbVfaible)&& this.existeEspace(nbVfaible))
-				{
-					while(j<nbVfaible)
+					int dep_lig=scan.nextInt();
+					int dep_col=scan.nextInt();
+					if(this.ligne_valide(dep_lig)&&this.ligne_valide(dep_col))
 					{
-						int nl1=scan.nextInt();
-						int nc1=scan.nextInt();
-						if(this.ligne_valide(nl1)&&this.ligne_valide(nc1))
-						{laby[nl1][nc1]=new VirusFaible(nl1,nc1);}
-						else
-						{
-							System.out.println("Le positionnement de Virus Faible est invalide");
-							System.exit(0);
-						}
-						j++;
+						laby[dep_lig][dep_col]=new EspeceHumaine("Homme",dep_lig,dep_col);//case de depart
 					}
-				}
-				else
-				{
-					System.out.println("Le nombre de virus faible est invalide");
-					System.exit(0);
-				}
-				int nbgel=scan.nextInt();
-				int a=0;
-				if (this.nombre_valide(nbgel)&& this.existeEspace(nbgel))
-				{
-					while(a<nbgel)
+					else
 					{
-						int nl2=scan.nextInt();
-						int nc2= scan.nextInt();
-						if(this.ligne_valide(nl2)&&this.ligne_valide(nc2))
-						{laby[nl2][nc2]=new GelDesinfectant(nl2,nc2);}
-						else
-						{
-							System.out.println("Le positionnement de gel Desinfectant est invalide");
-							System.exit(0);
-						}
-						a++;
-					}
-				}
-				else
-				{
-					System.out.println("Le nombre de gel desinfectant est invalide");
-					System.exit(0);
-				}
-				int nbp=scan.nextInt();
-				int b=0;
-				if (this.nombre_valide(nbp)&& this.existeEspace(nbp))
-				{
-					while(b<nbp)
+						System.out.println("Le positionnement de la case de depart est invalide");
+						System.exit(0);
+					}	
+					int ligneA=scan.nextInt();
+					int coloneA=scan.nextInt();
+					if(this.ligne_valide(ligneA)&&this.ligne_valide(coloneA))
 					{
-						int nl3=scan.nextInt();
-						int nc3=scan.nextInt();
-						if(this.ligne_valide(nl3)&&this.ligne_valide(nc3))
-						{laby[nl3][nc3]=new PotionEnergie(nl3,nc3);}
-						else
+						laby[ligneA][coloneA].set_type("Arrive");// case d'arrive
+					}
+					else
+					{
+						System.out.println("Le positionnement de la case d'arrivee est invalide");
+						System.exit(0);
+					}
+					int nbcovid=scan.nextInt();
+					int i=0;
+					if (this.nombre_valide(nbcovid) && this.existeEspace(nbcovid)) 
+					{
+						while(i<nbcovid)
 						{
-							System.out.println("Le positionnement de potion d'energie est invalide");
-							System.exit(0);
+							int nl=scan.nextInt();
+							int nc=scan.nextInt();
+							laby[nl][nc]=new Covid19(nl,nc);
+							if(this.ligne_valide(nl)&&this.ligne_valide(nc))
+							{
+								laby[nl][nc]=new Covid19(nl,nc);
+							}
+							else
+							{
+								System.out.println("Le positionnement de Covid19 est invalide");
+								System.exit(0);
+							}
+							i++;
 						}
-						b++;
+					}
+					else
+					{
+						System.out.println("Le nombre de COVID19 est invalide");
+						System.exit(0);
+					}
+					int nbVfaible=scan.nextInt();
+					int j=0;
+					if (this.nombre_valide(nbVfaible)&& this.existeEspace(nbVfaible))
+					{
+						while(j<nbVfaible)
+						{
+							int nl1=scan.nextInt();
+							int nc1=scan.nextInt();
+							if(this.ligne_valide(nl1)&&this.ligne_valide(nc1))
+							{
+								laby[nl1][nc1]=new VirusFaible(nl1,nc1);
+							}
+							else
+							{
+								System.out.println("Le positionnement de Virus Faible est invalide");
+								System.exit(0);
+							}
+							j++;
+						}
+					}
+					else
+					{
+						System.out.println("Le nombre de virus faible est invalide");
+						System.exit(0);
+					}
+					int nbgel=scan.nextInt();
+					int a=0;
+					if (this.nombre_valide(nbgel)&& this.existeEspace(nbgel))
+					{
+						while(a<nbgel)
+						{
+							int nl2=scan.nextInt();
+							int nc2= scan.nextInt();
+							if(this.ligne_valide(nl2)&&this.ligne_valide(nc2))
+							{
+								laby[nl2][nc2]=new GelDesinfectant(nl2,nc2);
+							}
+							else
+							{
+								System.out.println("Le positionnement de gel Desinfectant est invalide");
+								System.exit(0);
+							}
+							a++;
+						}
+					}
+					else
+					{
+						System.out.println("Le nombre de gel desinfectant est invalide");
+						System.exit(0);
+					}
+					int nbp=scan.nextInt();
+					int b=0;
+					if (this.nombre_valide(nbp)&& this.existeEspace(nbp))
+					{
+						while(b<nbp)
+						{
+							int nl3=scan.nextInt();
+							int nc3=scan.nextInt();
+							if(this.ligne_valide(nl3)&&this.ligne_valide(nc3))
+							{
+								laby[nl3][nc3]=new PotionEnergie(nl3,nc3);
+							}
+							else
+							{
+								System.out.println("Le positionnement de potion d'energie est invalide");
+								System.exit(0);
+							}
+							b++;
+						}
+					}
+					else
+					{
+						System.out.println("Le nombre de potion energie est invalide");
+						System.exit(0);
 					}
 				}
-				else
+				catch(FileNotFoundException e)
 				{
-					System.out.println("Le nombre de potion energie est invalide");
-					System.exit(0);
+					System.out.println("\u001b[1;31mFichier est Introuvable\u001b[0m, Veuillez ecrire le nom du fichier sans l'extension \".txt\"");
 				}
 			}
-			catch (Exception e){
-				System.out.println(e.toString());
-					
-			}
-		 
-	   }
+		}
 //__________________________________________________________________________________________________________
 	public void choisirgenre() { //methode permettant au joueur de choisir entre homme femme ou enfant 
 		System.out.println("Vous etes (enfant/femme/homme)");
@@ -692,7 +710,15 @@ while (bo)
 			   
 			   while(this.choix_valide(choix1)==false);
 
-			   if(choix1.contentEquals("fichier")) {this.initialiseFichier();}
+			   if(choix1.contentEquals("fichier")) {
+				   try{
+					   this.initialiseFichier();
+				   }
+				   catch(FileNotFoundException e) {
+					   
+				   }
+				   
+			   }
 			   else if(choix1.contentEquals("clavier")) {this.initialisation();}
 			   else if(choix1.contentEquals("aleatoire")) {this.initialiseRandom();}
 	   }
