@@ -664,6 +664,7 @@ while (bo)
 			{
 				System.out.println("  \u001b[1;31mPERDUE!!!!\u001b[0m");
 				objet.set_gel_intime(true);
+				System.exit(0);
 			}
 		else if (maze.test_termine(Homme))
 			System.out.println("  \u001b[1;32mGAGNANT\u001b[0m");

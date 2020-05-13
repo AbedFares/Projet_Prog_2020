@@ -27,7 +27,7 @@ public class Timing {
 				//cancel();
 				}
 			}
-		},0, 1000);
+		},20, 1000);
 	}
 	public void set_covid_surv(boolean bo) {
 		covid_surv=bo;
