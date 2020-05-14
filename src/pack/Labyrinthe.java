@@ -505,7 +505,7 @@ while (bo)
 				try
 				{	
 					Scanner sc= new Scanner(System.in);
-					System.out.print("donnez le nom du fichier a lister : ") ; 
+					System.out.print("\ndonnez le nom du fichier a lister : ") ; 
 					nomfich= sc.next() ;
 					nomfich+=".txt";
 					Scanner scan=new Scanner(new File(nomfich));
@@ -658,7 +658,7 @@ while (bo)
 				}
 				catch(FileNotFoundException e)
 				{
-					System.out.println(" \u001b[1;31mFichier est Introuvable !\u001b[0m,\nVeuillez ecrire le nom du fichier sans l'extension \".txt\"");
+					System.out.println("\n\u001b[1;31mFichier est Introuvable !\u001b[0m,\nVeuillez ecrire le nom du fichier sans l'extension \".txt\"");
 				}
 			}
 		}
