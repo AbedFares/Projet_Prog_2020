@@ -658,17 +658,17 @@ while (bo)
 				}
 				catch(FileNotFoundException e)
 				{
-					System.out.println("\u001b[1;31mFichier est Introuvable\u001b[0m, Veuillez ecrire le nom du fichier sans l'extension \".txt\"");
+					System.out.println(" \u001b[1;31mFichier est Introuvable !\u001b[0m,\nVeuillez ecrire le nom du fichier sans l'extension \".txt\"");
 				}
 			}
 		}
 //__________________________________________________________________________________________________________
 	public void choisirgenre() { //methode permettant au joueur de choisir entre homme femme ou enfant 
-		System.out.println("Niveau du jeu");
+		System.out.println("---Niveau du jeu---\n");
 	    Scanner put = new Scanner(System.in);
 		   String choix;
 		   //while (!choix.contentEquals("homme") && !choix.contentEquals("femme") && !choix.contentEquals("enfant"))
-			   System.out.println("Tapez l'un de ces mots : Homme /Femme /Enfant");
+			   System.out.println("Tapez l'un de ces mots : homme /femme /enfant");
 			   do {
 			   choix=put.nextLine();
 		   }
@@ -676,13 +676,13 @@ while (bo)
 
 			   if(choix.contentEquals("enfant")) {
 				   
-					   System.out.println ("niveau des enfants");
+					   System.out.println ("\n **Niveau des enfants**\n");
 					   this.initialisation();}
 			   else if(choix.contentEquals("femme")) {
-				   System.out.println ("Niveau des adultes");
+				   System.out.println ("\n **Niveau des adultes**\n");
 			       choisirMode();}
 			   else if(choix.contentEquals("homme")) {
-				   System.out.println ("Niveau des adultes");
+				   System.out.println ("\n **Niveau des adultes**\n");
 			       choisirMode();}
 		   
 			   
